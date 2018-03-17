@@ -5,6 +5,7 @@ const client = new Discord.Client();
 //   console.log(`Logged in as ${client.user.tag}!`);
 // });
 //
+//TROLOLOL
 // client.on('message', msg => {
 //   if (msg.content === 'ping') {
 //     msg.reply('pong');
