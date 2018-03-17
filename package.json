@@ -1,0 +1,28 @@
+{
+  "name": "ojk-discord-bot",
+  "version": "1.0.0",
+  "description": "OJK Discord bot",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Janchu/ojk-discord-bot.git"
+  },
+  "keywords": [
+    "ojk",
+    "discord",
+    "bot"
+  ],
+  "author": "Janne Jäppinen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Janchu/ojk-discord-bot/issues"
+  },
+  "homepage": "https://github.com/Janchu/ojk-discord-bot#readme",
+  "dependencies": {
+    "discord.js": "^11.3.2"
+  }
+}
