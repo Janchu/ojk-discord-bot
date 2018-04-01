@@ -1,17 +1,27 @@
 import Discord from 'discord.js';
+import axios from 'axios';
 import config from './config';
 
 
-const client = new Discord.Client();
+const bot = new Discord.Client();
 
-client.login(config.token);
+bot.login(config.token);
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+bot.on('ready', () => {
+  console.log(bot.user);
+  console.log(`Logged in with ${bot.user.tag} as ${bot.user.username}!`);
 });
 
-client.on('message', msg => {
-  if (msg.content === 'ping') {
-    msg.reply('pong');
+
+/* Hearthstone card search */
+bot.on('message', msg => {
+  // Check if user says something that includes ?hs
+  if (msg.content.includes('?hs ')) {
+    const searchQuery = msg.content.replace('?hs ', ''); // Modify string to be able to use it as a search word
+
+    // Make http get request to hearthstoneapi
+    axios.get(`https://omgvamp-hearthstone-v1.p.mashape.com/cards/${searchQuery}`, { headers: { 'X-Mashape-Key': config.mashapeKey }})
+    .then((res) => res.data.forEach(card => msg.reply(card.img))) // <- loop through the list and make bot reply the image
+    .catch(err => console.log(err)); // console log if something goes wrong
   }
 });
