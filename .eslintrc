@@ -1,7 +1,14 @@
 {
-  "extends": "airbnb-base",
+  "extends": ["airbnb-base", "prettier"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
   "parserOptions": {
-    "ecmaVersion": 6,
+    "ecmaVersion": 8,
     "sourceType": "module"
+  },
+  "rules": {
+    "linebreak-style": "off"
   }
 }

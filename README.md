@@ -37,3 +37,16 @@ npm install
 ```bash
 npm start
 ```
+
+
+## Production
+
+Build the production version
+```bash
+npm run prod
+```
+
+Run the production version as a pm2 process
+```bash
+pm2 run prod build/index.js -i 0 --name "ojk-discord-bot"
+```
