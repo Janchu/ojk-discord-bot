@@ -7,7 +7,7 @@ const hs = msg => {
   const searchQuery = msg.content.replace("?hs ", "");
 
   axios
-    .get(`${config.hs_api_url}${searchQuery}`, {
+    .get(`${config.hsApiUrl}${searchQuery}`, {
       headers: { "X-Mashape-Key": config.mashapeKey }
     })
     .then(res =>

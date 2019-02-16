@@ -1,9 +1,16 @@
 import axios from "axios";
 import config from "../config";
 import championReply from "./championReply";
+import help from "../help";
 
 async function lol(msg) {
+  function championsTotal(keys) {
+    /** **?lol champions total** - Returns total number of champions */
+    return keys.length;
+  }
+
   function getChampion(champions, keys, championName) {
+    /** **?lol champion <champion name>** - Returns information of said champion */
     // This currently only accepts exactly correct name.
     // TODO: Maybe implement fuzzy search for name and the ability to search with other params in the future?
     return champions[
@@ -14,21 +21,28 @@ async function lol(msg) {
   }
 
   function getRandomChampion(champions, keys) {
+    /** **?lol random** - Returns random champion */
     return champions[keys[(keys.length * Math.random()) << 0]]; // eslint-disable-line no-bitwise
   }
 
   function getRandomTeamComp(champions, keys) {
+    /** **?lol random team** - Returns random champion */
     // This works but it's a bit ugly
     // TODO: Refactor and make prettier
     const availableChampions = { ...champions };
     const teamSize = [{}, {}, {}, {}, {}];
     const teamComp = teamSize.map(() => {
       const randomChampion = getRandomChampion(availableChampions, keys);
-      // Is there a better solution than deleting the key?
+      // TODO: Is there a better solution than deleting the key?
       delete availableChampions[randomChampion.id];
       return randomChampion;
     });
     return teamComp;
+  }
+
+  function getApiVersion(version) {
+    /** **?lol api-version** - Returns api-version */
+    return version;
   }
 
   try {
@@ -45,8 +59,19 @@ async function lol(msg) {
     // if-else structure to get the exact command.
     // TODO: find a cleaner way to do this because there will be more commands in the future
     // TODO: improve error handling
-    if (cmd === "champions total") {
-      msg.channel.send(`Current total amount of champions: **${keys.length}**`);
+    if (cmd === "help") {
+      const functions = [
+        championsTotal,
+        getChampion,
+        getRandomChampion,
+        getRandomTeamComp,
+        getApiVersion
+      ];
+      msg.channel.send(help(functions));
+    } else if (cmd === "champions total") {
+      msg.channel.send(
+        `Current total amount of champions: **${championsTotal(keys)}**`
+      );
     } else if (cmd === "random" || cmd === "random champion") {
       const randomChampion = getRandomChampion(champions, keys);
       msg.reply(`you should play ${randomChampion.name}`);
@@ -63,7 +88,7 @@ async function lol(msg) {
       );
       msg.channel.send(championReply(champion));
     } else if (cmd === "api-version") {
-      msg.reply(`I'm currently using api version ${version}`);
+      msg.reply(`I'm currently using api version ${getApiVersion(version)}`);
     }
   } catch (e) {
     msg.reply(`An error occured. ${e}`);
