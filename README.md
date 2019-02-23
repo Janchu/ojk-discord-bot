@@ -56,4 +56,4 @@ In development you can run the bot with `npm start`.
 
 Build the production version `npm run build`.
 
-Run it with in terminal with `npm run prod` or as a pm2 process `pm2 start build/index.js -i 0 --name "ojk-discord-bot"`
+Run it with in terminal with `npm run prod` or as a pm2 process `pm2 start "npm run prod" -i 0 --name "ojk-discord-bot"`
