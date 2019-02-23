@@ -3,6 +3,7 @@ import { readFileSync } from "fs";
 import config from "../config";
 import help from "./help";
 import { lolHelpTexts } from "../lol";
+import { hsHelpTexts } from "../hs";
 
 export const generalHelpTexts = {
   header: "__**General commands**__",
@@ -29,7 +30,7 @@ export default async function general(msg) {
   const cmd = msg.content.replace("?", "");
 
   if (cmd === "help") {
-    help(msg, [generalHelpTexts, lolHelpTexts]);
+    help(msg, [generalHelpTexts, lolHelpTexts, hsHelpTexts]);
   } else if (cmd === "version" || cmd === "v") {
     displayVersion(msg);
   } else if (cmd === "changelog") {
