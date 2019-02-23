@@ -7,7 +7,7 @@ import help from "../general/help";
 export const lolHelpTexts = {
   header: "__**LoL commands**__",
   displayChampionsTotal: "**?lol champions total** - Returns total number of champions",
-  displayChampion: "**?lol champion <champion name>** - Searches for a champion and returns info about the said champion",
+  displayChampion: "**?lol champion <champion name>** - Searches for a champion and returns info about it",
   displayRandomChampion: "**?lol random** - Returns random champion",
   displayRandomTeamComp: "**?lol random team** - Returns a team of random champions",
   displayApiVersion: "**?lol api-version** - Returns the api version"
@@ -99,7 +99,7 @@ export default function lol(msg) {
       displayRandomChampion(msg);
     } else if (cmd === "random team" || cmd === "random teamcomp") {
       displayRandomTeamComp(msg);
-    } else if (cmd.includes("champion")) {
+    } else if (cmd.startsWith("champion")) {
       displayChampion(msg, cmd);
     } else if (cmd === "api-version") {
       displayApiVersion(msg);
