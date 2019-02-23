@@ -8,7 +8,7 @@ export default function help(msg, helpModules) {
         helpText = [...helpText, moduleHeader, ...moduleText];
       });
     } else {
-      const moduleText = Object.values(module);
+      const moduleText = Object.values(helpModules);
       helpText = [...helpText, ...moduleText];
     }
     msg.channel.send(helpText);
