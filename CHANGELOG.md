@@ -1,3 +1,10 @@
+**1.0.2** (2019-2-23)
+
+_General:_
+
+- Fixed bug in lol help.
+- Added HS help.
+
 **1.0.1** (2019-2-23)
 
 _General:_

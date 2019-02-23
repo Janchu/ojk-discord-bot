@@ -1,6 +1,6 @@
 {
   "name": "ojk-discord-bot",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "OJK Discord bot",
   "main": "src/index.js",
   "scripts": {
