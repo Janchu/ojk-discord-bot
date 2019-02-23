@@ -1,52 +1,59 @@
-# ojk-discord-bot
+# OJK Bot
 
+## Table of contents
 
-## Requirements
+- [Getting OJK Bot up and running](#getting-ojk-bot-up-and-running)
+  - [Requirements](#requirements)
+  - [Create a Discord application](#create-a-discord-application)
+  - [Config.js](#config.js)
+  - [Dependencies](#dependencies)
+  - [Run the bot](#run-the-bot)
+    - [Development](#development)
+    - [Production](#production)
 
+## Getting OJK Bot up and running
 
-### Node
+### Requirements
 
-Node.js 6.0.0 or newer is required.
+**Node.js** 8.0.0 or newer is required. Latest LTS is recommended.
 
-**Ubuntu:** Installation instructions can be found [here](https://nodejs.org/en/download/package-manager/#debian-and-ubuntu-based-linux-distributions).
+### Create a Discord application
 
-**Windows:** Download LTS or current .msi from [here](https://nodejs.org/en/download/) and install. Or with [chocolatey](https://chocolatey.org/): `choco install nodejs-lts` (LTS) or `choco install nodejs` (current)
+Create a Discord application for your server [here](https://discordapp.com/developers/applications/).
 
+Add a bot to your application and copy its token to config.js described in next step.
 
-### Node Package manager
+Invite the bot to your server in the OAuth2 page using https://discordapp.com/oauth2/authorized as redirect URL, selecting _bot_ as scope and giving it _"Send Messages"_ permission.
 
-Node ships with `npm`.
+### Config.js
 
-`yarn` can be used as an alternative for `npm`.
+Your `config.js` file should look like this. Replace curly brace variables with actual values.
 
-Yarn installation instructions for all operating systems can be found [here](https://yarnpkg.com/lang/en/docs/install/).
-
-
-## Getting started
-
-### Install dependencies
-
-Projects dependencies are listed in `package.json`
-
-```bash
-npm install
+```javascript
+export default {
+  token: "{token}",
+  mashapeKey: "{key}",
+  hsApiUrl: "{url}",
+  lolApiUrl: "{url}"
+};
 ```
 
-### Start development server
+Ask for the API urls from the maintainer of this repository.
 
-```bash
-npm start
-```
+### Dependencies
 
+Install dependencies for development environment `npm install`.
 
-## Production
+> Note that in production environment you can do `npm install --only=prod`.
 
-Build the production version
-```bash
-npm run prod
-```
+### Run the bot
 
-Run the production version as a pm2 process
-```bash
-pm2 start build/index.js -i 0 --name "ojk-discord-bot"
-```
+#### Development
+
+In development you can run the bot with `npm start`.
+
+#### Production
+
+Build the production version `npm run build`.
+
+Run it with in terminal with `npm run prod` or as a pm2 process `pm2 start build/index.js -i 0 --name "ojk-discord-bot"`

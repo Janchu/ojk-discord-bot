@@ -2,6 +2,7 @@ import Discord from "discord.js";
 import config from "./config";
 import hs from "./hs";
 import lol from "./lol";
+import general from "./general";
 
 const bot = new Discord.Client();
 
@@ -17,5 +18,7 @@ bot.on("message", msg => {
     hs(msg);
   } else if (msg.content.startsWith("?lol ")) {
     lol(msg);
+  } else if (msg.content.startsWith("?")) {
+    general(msg);
   }
 });

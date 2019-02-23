@@ -2,114 +2,107 @@ import axios from "axios";
 import Fuse from "fuse.js";
 import config from "../config";
 import championReply from "./championReply";
-import help from "../help";
+import help from "../general/help";
 
-function championsTotal(champions) {
-  /** **?lol champions total** - Returns total number of champions */
-  return champions.length;
+export const lolHelpTexts = {
+  header: "__**LoL commands**__",
+  displayChampionsTotal: "**?lol champions total** - Returns total number of champions",
+  displayChampion: "**?lol champion <champion name>** - Searches for a champion and returns info about the said champion",
+  displayRandomChampion: "**?lol random** - Returns random champion",
+  displayRandomTeamComp: "**?lol random team** - Returns a team of random champions",
+  displayApiVersion: "**?lol api-version** - Returns the api version"
+}; // prettier-ignore
+
+async function getApiVersion() {
+  // Get the newest api version. First index of the returned array is the newest version.
+  const versionRes = await axios.get(`${config.lolApiUrl}/api/versions.json`);
+  return versionRes.data[0];
 }
 
-function getChampion(champions, championName) {
-  /** **?lol champion <champion name>** - Searches for a champion and returns info about the said champion */
-  const fuse = new Fuse(champions, { keys: ["name"] });
-  const searchResults = fuse.search(championName);
-  // First index of result array is the most accurate result, so let's return that.
-  return searchResults[0];
+async function getChampions() {
+  // Get champions from the api. The api returns champions as an object.
+  // To make life easier, we create an array of the object values (champions) and return it.
+  const version = await getApiVersion();
+  const championsRes = await axios.get(
+    `${config.lolApiUrl}/cdn/${version}/data/en_US/champion.json`
+  );
+  const championsObject = championsRes.data.data;
+  return Object.values(championsObject);
 }
 
-function getRandomChampion(champions) {
-  /** **?lol random** - Returns random champion */
-  return champions[(champions.length * Math.random()) << 0]; // eslint-disable-line no-bitwise
+async function displayChampionsTotal(msg) {
+  try {
+    const champions = await getChampions();
+    msg.channel.send(
+      `Current total amount of champions: **${champions.length}**`
+    );
+  } catch (e) {
+    msg.channel.send(`Can't display champion total right now. ${e}`);
+  }
 }
 
-function getRandomTeamComp(champions) {
-  /** **?lol random team** - Returns random champion */
+async function displayChampion(msg, cmd) {
+  const championName = cmd.replace("champion ", "");
+  try {
+    const champions = await getChampions();
+    const version = await getApiVersion();
+    const fuse = new Fuse(champions, { keys: ["name"] });
+    const searchResults = fuse.search(championName);
+    // First index of result array is the most accurate result, so let's return that.
+    const champion = searchResults[0];
+    if (champion.name.toUpperCase() !== championName.toUpperCase()) {
+      msg.reply(`did you mean "${champion.name}"?`);
+    }
+    msg.channel.send(
+      `${config.lolApiUrl}/cdn/${version}/img/champion/${champion.image.full}`
+    );
+    msg.channel.send(championReply(champion));
+  } catch (e) {
+    msg.channel.send(`Champion ${championName} doesn't exist.`);
+  }
+}
+
+async function displayRandomChampion(msg) {
+  const champions = await getChampions();
+  const randomChampion = champions[(champions.length * Math.random()) << 0]; // eslint-disable-line no-bitwise
+  msg.reply(`you should play ${randomChampion.name}`);
+}
+
+async function displayRandomTeamComp(msg) {
+  const champions = await getChampions();
   const availableChampions = [...champions];
   const teamComp = [...Array(5)].map(() => {
-    const randomChampion = getRandomChampion(availableChampions);
+    const randomChampion =
+      availableChampions[(champions.length * Math.random()) << 0]; // eslint-disable-line no-bitwise
     const index = availableChampions.findIndex(x => x.id === randomChampion.id);
     availableChampions.splice(index, 1);
     return randomChampion;
   });
-  return teamComp;
+  msg.channel.send(`Your teamcomp: ${teamComp.map(c => c.name).join(", ")}`);
 }
 
-function getApiVersion(version) {
-  /** **?lol api-version** - Returns the api version */
-  return version;
+async function displayApiVersion(msg) {
+  const version = await getApiVersion();
+  msg.channel.send(`I'm currently using api version ${version}`);
 }
 
-export default async function lol(msg) {
+export default function lol(msg) {
   try {
     // Parse the command after "?lol"-prefix
     const cmd = msg.content.replace("?lol ", "");
 
-    // Get the newest api version. First index of the returned array is the newest version.
-    const versionRes = await axios.get(`${config.lolApiUrl}/api/versions.json`);
-    const version = versionRes.data[0];
-
-    // Get champions from the api. The api returns champions as an object.
-    // To make life easier, we create an array of the object values (champions)
-    const championsRes = await axios.get(
-      `${config.lolApiUrl}/cdn/${version}/data/en_US/champion.json`
-    );
-    const championsObject = championsRes.data.data;
-    const champions = Object.values(championsObject);
-
-    // if-else structure to get the exact command.
-
-    // Help command
     if (cmd === "help") {
-      const functions = [
-        championsTotal,
-        getChampion,
-        getRandomChampion,
-        getRandomTeamComp,
-        getApiVersion
-      ];
-      msg.channel.send(help(functions));
-
-      // Champions total command
+      help(msg, lolHelpTexts);
     } else if (cmd === "champions total") {
-      msg.channel.send(
-        `Current total amount of champions: **${championsTotal(champions)}**`
-      );
-
-      // Random champion command
+      displayChampionsTotal(msg);
     } else if (cmd === "random" || cmd === "random champion") {
-      const randomChampion = getRandomChampion(champions);
-      msg.reply(`you should play ${randomChampion.name}`);
-
-      // Random teamcomp command
+      displayRandomChampion(msg);
     } else if (cmd === "random team" || cmd === "random teamcomp") {
-      const teamComp = getRandomTeamComp(champions);
-      msg.channel.send(
-        `Your teamcomp: ${teamComp.map(champ => champ.name).join(", ")}`
-      );
-
-      // Champion search command
+      displayRandomTeamComp(msg);
     } else if (cmd.includes("champion")) {
-      const trimmedChampionName = cmd.replace("champion ", "");
-      try {
-        const champion = getChampion(champions, trimmedChampionName);
-        if (champion.name.toUpperCase() !== trimmedChampionName.toUpperCase()) {
-          msg.reply(`did you mean "${champion.name}"?`);
-        }
-        msg.channel.send(
-          `${config.lolApiUrl}/cdn/${version}/img/champion/${
-            champion.image.full
-          }`
-        );
-        msg.channel.send(championReply(champion));
-      } catch (e) {
-        msg.channel.send(`Champion ${trimmedChampionName} doesn't exist.`);
-      }
-
-      // Api-version command
+      displayChampion(msg, cmd);
     } else if (cmd === "api-version") {
-      msg.channel.send(
-        `I'm currently using api version ${getApiVersion(version)}`
-      );
+      displayApiVersion(msg);
     }
   } catch (e) {
     msg.channel.send(`An error occured. ${e}`);
