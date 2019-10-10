@@ -31,10 +31,10 @@ Your `config.js` file should look like this. Replace curly brace variables with 
 
 ```javascript
 export default {
-  token: "{token}",
-  mashapeKey: "{key}",
-  hsApiUrl: "{url}",
-  lolApiUrl: "{url}"
+  token: '{token}',
+  mashapeKey: '{key}',
+  hsApiUrl: '{url}',
+  lolApiUrl: '{url}',
 };
 ```
 

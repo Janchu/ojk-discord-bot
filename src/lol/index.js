@@ -1,17 +1,20 @@
-import axios from "axios";
-import Fuse from "fuse.js";
-import config from "../config";
-import championReply from "./championReply";
-import help from "../general/help";
+import axios from 'axios';
+import Fuse from 'fuse.js';
+import config from '../config';
+import championReply from './championReply';
+import help from '../general/help';
 
 export const lolHelpTexts = {
-  header: "__**LoL commands**__",
-  displayChampionsTotal: "**?lol champions total** - Returns total number of champions",
-  displayChampion: "**?lol champion <champion name>** - Searches for a champion and returns info about it",
-  displayRandomChampion: "**?lol random** - Returns random champion",
-  displayRandomTeamComp: "**?lol random team** - Returns a team of random champions",
-  displayApiVersion: "**?lol api-version** - Returns the api version"
-}; // prettier-ignore
+  header: '__**LoL commands**__',
+  displayChampionsTotal:
+    '**?lol champions total** - Returns total number of champions',
+  displayChampion:
+    '**?lol champion <champion name>** - Searches for a champion and returns info about it',
+  displayRandomChampion: '**?lol random** - Returns random champion',
+  displayRandomTeamComp:
+    '**?lol random team** - Returns a team of random champions',
+  displayApiVersion: '**?lol api-version** - Returns the api version',
+};
 
 async function getApiVersion() {
   // Get the newest api version. First index of the returned array is the newest version.
@@ -24,7 +27,7 @@ async function getChampions() {
   // To make life easier, we create an array of the object values (champions) and return it.
   const version = await getApiVersion();
   const championsRes = await axios.get(
-    `${config.lolApiUrl}/cdn/${version}/data/en_US/champion.json`
+    `${config.lolApiUrl}/cdn/${version}/data/en_US/champion.json`,
   );
   const championsObject = championsRes.data.data;
   return Object.values(championsObject);
@@ -34,7 +37,7 @@ async function displayChampionsTotal(msg) {
   try {
     const champions = await getChampions();
     msg.channel.send(
-      `Current total amount of champions: **${champions.length}**`
+      `Current total amount of champions: **${champions.length}**`,
     );
   } catch (e) {
     msg.channel.send(`Can't display champion total right now. ${e}`);
@@ -42,11 +45,11 @@ async function displayChampionsTotal(msg) {
 }
 
 async function displayChampion(msg, cmd) {
-  const championName = cmd.replace("champion ", "");
+  const championName = cmd.replace('champion ', '');
   try {
     const champions = await getChampions();
     const version = await getApiVersion();
-    const fuse = new Fuse(champions, { keys: ["name"] });
+    const fuse = new Fuse(champions, { keys: ['name'] });
     const searchResults = fuse.search(championName);
     // First index of result array is the most accurate result, so let's return that.
     const champion = searchResults[0];
@@ -54,7 +57,7 @@ async function displayChampion(msg, cmd) {
       msg.reply(`did you mean "${champion.name}"?`);
     }
     msg.channel.send(
-      `${config.lolApiUrl}/cdn/${version}/img/champion/${champion.image.full}`
+      `${config.lolApiUrl}/cdn/${version}/img/champion/${champion.image.full}`,
     );
     msg.channel.send(championReply(champion));
   } catch (e) {
@@ -78,7 +81,7 @@ async function displayRandomTeamComp(msg) {
     availableChampions.splice(index, 1);
     return randomChampion;
   });
-  msg.channel.send(`Your teamcomp: ${teamComp.map(c => c.name).join(", ")}`);
+  msg.channel.send(`Your teamcomp: ${teamComp.map(c => c.name).join(', ')}`);
 }
 
 async function displayApiVersion(msg) {
@@ -89,19 +92,19 @@ async function displayApiVersion(msg) {
 export default function lol(msg) {
   try {
     // Parse the command after "?lol"-prefix
-    const cmd = msg.content.replace("?lol ", "");
+    const cmd = msg.content.replace('?lol ', '');
 
-    if (cmd === "help") {
+    if (cmd === 'help') {
       help(msg, lolHelpTexts);
-    } else if (cmd === "champions total") {
+    } else if (cmd === 'champions total') {
       displayChampionsTotal(msg);
-    } else if (cmd === "random" || cmd === "random champion") {
+    } else if (cmd === 'random' || cmd === 'random champion') {
       displayRandomChampion(msg);
-    } else if (cmd === "random team" || cmd === "random teamcomp") {
+    } else if (cmd === 'random team' || cmd === 'random teamcomp') {
       displayRandomTeamComp(msg);
-    } else if (cmd.startsWith("champion")) {
+    } else if (cmd.startsWith('champion')) {
       displayChampion(msg, cmd);
-    } else if (cmd === "api-version") {
+    } else if (cmd === 'api-version') {
       displayApiVersion(msg);
     }
   } catch (e) {
