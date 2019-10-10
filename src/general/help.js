@@ -3,7 +3,7 @@ export default function help(msg, helpModules) {
     let helpText = [];
     if (helpModules.constructor === Array) {
       helpModules.forEach(module => {
-        const moduleHeader = "";
+        const moduleHeader = '';
         const moduleText = Object.values(module);
         helpText = [...helpText, moduleHeader, ...moduleText];
       });
