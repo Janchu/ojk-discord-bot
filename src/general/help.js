@@ -1,17 +1,17 @@
-export default function help(msg, helpModules) {
+export default function help(msg, modules) {
   try {
-    let helpText = [];
-    if (helpModules.constructor === Array) {
-      helpModules.forEach(module => {
-        const moduleHeader = '';
-        const moduleText = Object.values(module);
-        helpText = [...helpText, moduleHeader, ...moduleText];
-      });
-    } else {
-      const moduleText = Object.values(helpModules);
-      helpText = [...helpText, ...moduleText];
-    }
-    msg.channel.send(helpText);
+    const helpTextBlocks = modules.map(module => {
+      const { commands, helpTextHeader } = module;
+      const helpTextRows = Object.values(commands).map(
+        command => `${command.usage} - ${command.description}`,
+      );
+      const helpTextBlock = `> __**${helpTextHeader}**__\n> ${helpTextRows.join(
+        '\n> ',
+      )}`;
+      return helpTextBlock;
+    });
+
+    msg.channel.send(helpTextBlocks.join('\n\n'));
   } catch (e) {
     msg.channel.send("Help can't be displayed right now.");
   }

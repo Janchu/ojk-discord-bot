@@ -2,39 +2,41 @@
 import { readFileSync } from 'fs';
 import config from '../config';
 import help from './help';
-import { lolHelpTexts } from '../lol';
-import { hsHelpTexts } from '../hs';
+import lol from '../modules/lol';
+import hs from '../modules/hs';
 
-export const generalHelpTexts = {
-  header: '__**General commands**__',
-  displayVersion:
-    '**?v** or **?version** - Shows the current version of OJK Bot',
-  displayChangelog: '**?changelog** - Shows changelog',
+const module = {
+  name: 'general',
+  helpTextHeader: 'General commands',
 };
 
-function displayVersion(msg) {
-  msg.channel.send(
-    `I'm the OJK Bot version **${process.env.npm_package_version}**`,
-  );
-}
+const commands = {
+  changelog: {
+    usage: '**!changelog**',
+    description: 'Shows changelog',
+    run: ({ msg }) => {
+      try {
+        const changelog = readFileSync(config.changelogPath, 'utf8');
+        msg.channel.send(`>>> ${changelog}`);
+      } catch (e) {
+        msg.channel.send("Sorry, I couldn't read the changelog right now.");
+      }
+    },
+  },
+  version: {
+    usage: '**!version**',
+    description: 'Shows the current version of OJK Bot',
+    run: ({ msg }) => {
+      msg.channel.send(
+        `I'm the OJK Bot version **${process.env.npm_package_version}**`,
+      );
+    },
+  },
+  help: {
+    usage: '**!help**',
+    description: 'Help',
+    run: ({ msg }) => help(msg, [{ ...module, commands }, lol, hs]),
+  },
+};
 
-function displayChangelog(msg) {
-  try {
-    const changelog = readFileSync(config.changelogPath, 'utf8');
-    msg.channel.send(changelog);
-  } catch (e) {
-    msg.channel.send("Sorry, I couldn't read the changelog right now.");
-  }
-}
-
-export default async function general(msg) {
-  const cmd = msg.content.replace('?', '');
-
-  if (cmd === 'help') {
-    help(msg, [generalHelpTexts, lolHelpTexts, hsHelpTexts]);
-  } else if (cmd === 'version' || cmd === 'v') {
-    displayVersion(msg);
-  } else if (cmd === 'changelog') {
-    displayChangelog(msg);
-  }
-}
+export default { ...module, commands };

@@ -1,11 +1,23 @@
-**1.0.2** (2019-2-23)
+**1.1.0** (2019-12-08)
+
+_General_:
+
+- Changed from ? to ! as command prefix.
+- Changed some command spelling (see !help).
+
+_Code_:
+
+- Refactored code to more modular architecture.
+- Created a command parser function to take care of all command parsing.
+
+**1.0.2** (2019-02-23)
 
 _General:_
 
 - Fixed bug in lol help.
 - Added HS help.
 
-**1.0.1** (2019-2-23)
+**1.0.1** (2019-02-23)
 
 _General:_
 
@@ -13,7 +25,7 @@ _General:_
 - Add ?changelog command for getting the changelog.
 - Improved help response layout.
 
-**1.0.0** (2019-2-17)
+**1.0.0** (2019-02-17)
 
 _League of Legends:_
 
