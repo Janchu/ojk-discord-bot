@@ -1,0 +1,17 @@
+name: Test
+on:
+  push:
+    branches:
+      - actions-testing
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+    - name: Test
+      run: |
+        echo Installing dependencies...
+        npm install
+        echo Building...
+        npm run build
