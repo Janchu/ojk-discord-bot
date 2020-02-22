@@ -1,4 +1,4 @@
-name: Test
+name: Deploy
 on:
   push:
     branches:
@@ -9,11 +9,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
-    - name: Test
+    - name: Deploy
       run: |
         echo Installing dependencies...
         npm install
         echo Building...
         npm run build
         echo Deploying...
-        cd ojk-discord-bot && cd ojk-discord-bot && pm2 start "npm run prod" -i 0 --name "ojk-discord-bot"
+        pm2 reload ojk-discord-bot
