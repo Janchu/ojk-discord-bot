@@ -1,6 +1,5 @@
 // import changelog from "../../CHANGELOG.md";
 import { readFileSync } from 'fs';
-import config from '../config';
 import help from './help';
 import lol from '../modules/lol';
 import hs from '../modules/hs';
@@ -16,7 +15,7 @@ const commands = {
     description: 'Shows changelog',
     run: ({ msg }) => {
       try {
-        const changelog = readFileSync(config.changelogPath, 'utf8');
+        const changelog = readFileSync(process.env.CHANGELOG_PATH, 'utf8');
         msg.channel.send(`>>> ${changelog}`);
       } catch (e) {
         msg.channel.send("Sorry, I couldn't read the changelog right now.");
