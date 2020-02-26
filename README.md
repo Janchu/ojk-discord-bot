@@ -5,7 +5,7 @@
 - [Getting OJK Bot up and running](#getting-ojk-bot-up-and-running)
   - [Requirements](#requirements)
   - [Create a Discord application](#create-a-discord-application)
-  - [Config.js](#config.js)
+  - [Environment variables](#environment-variables)
   - [Dependencies](#dependencies)
   - [Run the bot](#run-the-bot)
     - [Development](#development)
@@ -21,24 +21,25 @@
 
 Create a Discord application for your server [here](https://discordapp.com/developers/applications/).
 
-Add a bot to your application and copy its token to config.js described in next step.
+Add a bot to your application and copy its token to `.env` described in next step.
 
 Invite the bot to your server in the OAuth2 page using https://discordapp.com/oauth2/authorized as redirect URL, selecting _bot_ as scope and giving it _"Send Messages"_ permission.
 
-### Config.js
+### Environment variables
 
-Your `config.js` file should look like this. Replace curly brace variables with actual values.
+Your `.env` file should look something like this. Fill in actual values.
 
 ```javascript
-export default {
-  token: '{token}',
-  mashapeKey: '{key}',
-  hsApiUrl: '{url}',
-  lolApiUrl: '{url}',
-};
+PREFIX="!"
+HS_API_URL=""
+LOGIN_TOKEN=""
+MASHAPE_API_KEY=""
+RIOT_API_URL=""
+RIOT_SUMMONER_API_URL=""
+RIOT_MASTERY_API_URL=""
+RIOT_API_KEY=""
+CHANGELOG_PATH=""
 ```
-
-Ask for the API urls from the maintainer of this repository.
 
 ### Dependencies
 

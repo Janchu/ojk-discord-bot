@@ -1,5 +1,4 @@
 import axios from 'axios';
-import config from '../config';
 import help from '../general/help';
 
 const module = {
@@ -8,8 +7,8 @@ const module = {
 };
 
 async function getCard(searchQuery) {
-  const response = await axios.get(`${config.hsApiUrl}${searchQuery}`, {
-    headers: { 'X-Mashape-Key': config.mashapeKey },
+  const response = await axios.get(`${process.env.HS_API_URL}${searchQuery}`, {
+    headers: { 'X-Mashape-Key': process.env.MASHAPE_API_KEY },
   });
   return response.data;
 }
