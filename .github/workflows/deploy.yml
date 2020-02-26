@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - actions-testing
+      - master
 jobs:
   deploy:
     runs-on: self-hosted
