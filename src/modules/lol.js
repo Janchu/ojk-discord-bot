@@ -1,6 +1,5 @@
 import axios from 'axios';
 import Fuse from 'fuse.js';
-import config from '../config';
 import help from '../general/help';
 
 const module = {
@@ -20,7 +19,7 @@ difficulty: ${[...Array(champion.info.difficulty)].map(() => '‖').join('')}
 
 async function getApiVersion() {
   // Get the newest api version. First index of the returned array is the newest version.
-  const versionRes = await axios.get(`${config.lolApiUrl}/api/versions.json`);
+  const versionRes = await axios.get(`${process.env.RIOT_API_URL}/api/versions.json`);
   return versionRes.data[0];
 }
 
@@ -29,7 +28,7 @@ async function getChampions() {
   // To make life easier, we create an array of the object values (champions) and return it.
   const version = await getApiVersion();
   const championsRes = await axios.get(
-    `${config.lolApiUrl}/cdn/${version}/data/en_US/champion.json`,
+    `${process.env.RIOT_API_URL}/cdn/${version}/data/en_US/champion.json`,
   );
   const championsObject = championsRes.data.data;
   return Object.values(championsObject);
@@ -71,7 +70,7 @@ export const commands = {
           msg.reply(`did you mean "${champion.name}"!`);
         }
         msg.channel.send(
-          `${config.lolApiUrl}/cdn/${version}/img/champion/${champion.image.full}`,
+          `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
         );
         msg.channel.send(championReply(champion));
       } catch (e) {

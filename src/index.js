@@ -1,14 +1,15 @@
 import Discord from 'discord.js';
-import config from './config';
 import hs from './modules/hs';
 import lol from './modules/lol';
 import general from './general';
+
+require('dotenv').config()
 
 const modules = [hs, lol];
 
 const bot = new Discord.Client();
 
-bot.login(config.token);
+bot.login(process.env.LOGIN_TOKEN);
 
 bot.on('ready', () => {
   console.log(`Logged in with ${bot.user.tag} as ${bot.user.username}!`); // eslint-disable-line no-console
@@ -30,7 +31,7 @@ function parseCommand(msg) {
 bot.on('message', msg => {
   // Ignore bot messages and messages not starting with prefix
   if (msg.author.bot) return;
-  if (!msg.content.startsWith(config.prefix)) return;
+  if (!msg.content.startsWith(process.env.PREFIX)) return;
 
   // Parse the command and run it.
   try {
