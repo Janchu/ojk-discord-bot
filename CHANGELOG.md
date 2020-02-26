@@ -1,3 +1,9 @@
+**1.1.1** (2020-02-26)
+
+_Code_: 
+- Automatic deployment
+- Use dotenv for managing environment variables
+
 **1.1.0** (2019-12-08)
 
 _General_:
