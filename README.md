@@ -15,7 +15,7 @@
 
 ### Requirements
 
-**Node.js** 8.0.0 or newer is required. Latest LTS is recommended.
+**Node.js** 12.0.0 or newer is required. Latest LTS is recommended.
 
 ### Create a Discord application
 
