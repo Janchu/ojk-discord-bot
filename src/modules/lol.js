@@ -15,7 +15,6 @@ const championReply = async (version, champion) => {
   )
     .getPalette()
     .then(palette => palette);
-  console.log(champion);
   const lolWikiId = champion.name.replace(' ', '_');
   const leagueofgraphsId = champion.id.toLowerCase();
   const probuildsId = champion.key;
