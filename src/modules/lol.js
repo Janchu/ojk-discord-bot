@@ -15,11 +15,11 @@ const championReply = async (version, champion) => {
   )
     .getPalette()
     .then(palette => palette);
-  console.log(champion)
+  console.log(champion);
   const lolWikiId = champion.name.replace(' ', '_');
   const leagueofgraphsId = champion.id.toLowerCase();
   const probuildsId = champion.key;
-  const championggId = champion.name.replace(' ', '')
+  const championggId = champion.name.replace(' ', '');
   const embeddedMessage = new Discord.MessageEmbed()
     .setColor(palette.Vibrant.getHex())
     .setTitle(champion.name)
@@ -32,10 +32,12 @@ const championReply = async (version, champion) => {
       'League of Graphs',
       `https://www.leagueofgraphs.com/champions/builds/${leagueofgraphsId}`,
     )
-    .addField('ProBuilds', `https://probuilds.net/champions/details/${probuildsId}`)
+    .addField(
+      'ProBuilds',
+      `https://probuilds.net/champions/details/${probuildsId}`,
+    )
     .addField('Champion.gg', `https://champion.gg/champion/${championggId}`)
-    .setTimestamp()
-    .setFooter('Some footer text here', 'https://i.imgur.com/wSTFkRM.png');
+    .setTimestamp();
   return embeddedMessage;
 };
 
