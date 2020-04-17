@@ -1,3 +1,5 @@
+import Discord from 'discord.js';
+import * as Vibrant from 'node-vibrant';
 import axios from 'axios';
 import Fuse from 'fuse.js';
 import help from '../general/help';
@@ -7,19 +9,42 @@ const module = {
   helpTextHeader: 'LoL commands',
 };
 
-const championReply = champion => `
-**${champion.name}**, *${champion.title}*
-roles: ${champion.tags.join(', ')}
-
-attack: ${[...Array(champion.info.attack)].map(() => '‖').join('')}
-defense: ${[...Array(champion.info.defense)].map(() => '‖').join('')}
-magic: ${[...Array(champion.info.magic)].map(() => '‖').join('')}
-difficulty: ${[...Array(champion.info.difficulty)].map(() => '‖').join('')}
-`;
+const championReply = async (version, champion) => {
+  const palette = await Vibrant.from(
+    `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
+  )
+    .getPalette()
+    .then(palette => palette);
+  const lolWikiId = champion.name.replace(' ', '_');
+  const leagueofgraphsId = champion.id.toLowerCase();
+  const probuildsId = champion.key;
+  const championggId = champion.name.replace(' ', '');
+  const embeddedMessage = new Discord.MessageEmbed()
+    .setColor(palette.Vibrant.getHex())
+    .setTitle(champion.name)
+    .setDescription(champion.title)
+    .setThumbnail(
+      `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
+    )
+    .addField('Wiki', `https://leagueoflegends.fandom.com/wiki/${lolWikiId}`)
+    .addField(
+      'League of Graphs',
+      `https://www.leagueofgraphs.com/champions/builds/${leagueofgraphsId}`,
+    )
+    .addField(
+      'ProBuilds',
+      `https://probuilds.net/champions/details/${probuildsId}`,
+    )
+    .addField('Champion.gg', `https://champion.gg/champion/${championggId}`)
+    .setTimestamp();
+  return embeddedMessage;
+};
 
 async function getApiVersion() {
   // Get the newest api version. First index of the returned array is the newest version.
-  const versionRes = await axios.get(`${process.env.RIOT_API_URL}/api/versions.json`);
+  const versionRes = await axios.get(
+    `${process.env.RIOT_API_URL}/api/versions.json`,
+  );
   return versionRes.data[0];
 }
 
@@ -69,10 +94,7 @@ export const commands = {
         if (champion.name.toUpperCase() !== championName.toUpperCase()) {
           msg.reply(`did you mean "${champion.name}"!`);
         }
-        msg.channel.send(
-          `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
-        );
-        msg.channel.send(championReply(champion));
+        msg.channel.send(await championReply(version, champion));
       } catch (e) {
         msg.channel.send(`Champion ${championName} doesn't exist.`);
       }
