@@ -11,7 +11,7 @@ import randomChampion from './lol/random-champion';
 import randomTeam from './lol/random-team';
 
 // Helpers
-import { helpTextFormatter } from '../utils/utils';
+import { helpTextFormatter } from '../utils';
 
 const helpWithExecute = {
   ...help,

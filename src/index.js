@@ -1,10 +1,10 @@
 import Discord from 'discord.js';
-import { parseCommand } from './utils/utils';
+import { parseCommand } from './utils';
 import commands from './commands';
 
 require('dotenv').config();
 
-const moduleNames = ['general', 'hs', 'lol'];
+const moduleNames = ['general', 'lol'];
 
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
