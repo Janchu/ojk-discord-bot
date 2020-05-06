@@ -1,3 +1,12 @@
+**1.2.0** (2020-05-06)
+
+- Aliases for commands
+- Removed HS commands
+
+_Code_:
+
+- Restructure commands
+
 **1.1.3** (2020-04-17)
 
 - Improved LoL champion info
@@ -5,11 +14,13 @@
 **1.1.2** (2020-03-07)
 
 _Code_:
+
 - Upgraded to Discord.js v12
 
 **1.1.1** (2020-02-26)
 
-_Code_: 
+_Code_:
+
 - Automatic deployment
 - Use dotenv for managing environment variables
 
