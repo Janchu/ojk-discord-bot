@@ -47,7 +47,7 @@ export default {
       const fuse = new Fuse(champions, { keys: ['name'] });
       const searchResults = fuse.search(championName);
       // First index of result array is the most accurate result, so let's return that.
-      const champion = searchResults[0];
+      const { item: champion } = searchResults[0];
       if (champion.name.toUpperCase() !== championName.toUpperCase()) {
         msg.reply(`did you mean "${champion.name}"!`);
       }
