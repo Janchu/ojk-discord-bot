@@ -23,7 +23,7 @@ bot.on('ready', () => {
 bot.on('message', msg => {
   // Ignore bot messages and messages not starting with prefix
   if (msg.author.bot) return;
-  if (!msg.content.startsWith(process.env.PREFIX)) return;
+  if (!msg.content.startsWith('!')) return;
 
   // Parse the command and execute it.
   try {

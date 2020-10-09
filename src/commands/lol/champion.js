@@ -5,7 +5,7 @@ import { getApiVersion, getChampions } from '../../utils/lol';
 
 const championReply = async (version, champion) => {
   const imagePalette = await Vibrant.from(
-    `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
+    `${process.env.LOL_DDRAGON_URL}/cdn/${version}/img/champion/${champion.image.full}`,
   )
     .getPalette()
     .then(palette => palette);
@@ -18,7 +18,7 @@ const championReply = async (version, champion) => {
     .setTitle(champion.name)
     .setDescription(champion.title)
     .setThumbnail(
-      `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
+      `${process.env.LOL_DDRAGON_URL}/cdn/${version}/img/champion/${champion.image.full}`,
     )
     .addField('Wiki', `https://leagueoflegends.fandom.com/wiki/${lolWikiId}`)
     .addField(

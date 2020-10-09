@@ -1,3 +1,11 @@
+**1.2.1** (2020-10-09)
+
+_Code_:
+
+- Clean up environment variables
+- Update readme
+- Update dependencies
+
 **1.2.0** (2020-05-06)
 
 - Aliases for commands
