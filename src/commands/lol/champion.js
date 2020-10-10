@@ -8,7 +8,7 @@ const championReply = async (version, champion) => {
     `${process.env.LOL_DDRAGON_URL}/cdn/${version}/img/champion/${champion.image.full}`,
   )
     .getPalette()
-    .then(palette => palette);
+    .then((palette) => palette);
   const lolWikiId = champion.name.replace(' ', '_');
   const leagueofgraphsId = champion.id.toLowerCase();
   const probuildsId = champion.key;
