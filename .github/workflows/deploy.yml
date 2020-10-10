@@ -7,23 +7,17 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-    - name: Deploy
-      run: |
-        echo Installing dependencies...
-        npm install
-        echo Setting environment variables...
-        echo ${{ secrets.PREFIX }} >> .env
-        echo ${{ secrets.HS_API_URL }} >> .env
-        echo ${{ secrets.LOGIN_TOKEN }} >> .env
-        echo ${{ secrets.MASHAPE_API_KEY }} >> .env
-        echo ${{ secrets.RIOT_API_URL }} >> .env
-        echo ${{ secrets.RIOT_SUMMONER_API_URL }} >> .env
-        echo ${{ secrets.RIOT_MASTERY_API_URL }} >> .env
-        echo ${{ secrets.RIOT_API_KEY }} >> .env
-        echo ${{ secrets.CHANGELOG_PATH }} >> .env
-        echo Building...
-        npm run build
-        echo Reloading...
-        pm2 reload ojk-discord-bot
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - name: Deploy
+        run: |
+          echo Installing dependencies...
+          npm install --only=prod
+          echo Setting environment variables...
+          echo ${{ secrets.LOGIN_TOKEN }} >> .env
+          echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
+          echo ${{ secrets.CHANGELOG_PATH }} >> .env
+          echo Building...
+          npm run build
+          echo Reloading...
+          pm2 reload ojk-discord-bot

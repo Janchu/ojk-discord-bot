@@ -9,7 +9,7 @@ const moduleNames = ['general', 'lol'];
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 
-commands.forEach(cmd => {
+commands.forEach((cmd) => {
   bot.commands.set(cmd.name, cmd);
 });
 
@@ -20,10 +20,10 @@ bot.on('ready', () => {
 });
 
 /* Listen to messages */
-bot.on('message', msg => {
+bot.on('message', (msg) => {
   // Ignore bot messages and messages not starting with prefix
   if (msg.author.bot) return;
-  if (!msg.content.startsWith(process.env.PREFIX)) return;
+  if (!msg.content.startsWith('!')) return;
 
   // Parse the command and execute it.
   try {
@@ -32,7 +32,7 @@ bot.on('message', msg => {
     const command =
       bot.commands.get(commandName) ||
       bot.commands.find(
-        cmd => cmd.aliases && cmd.aliases.includes(commandName),
+        (cmd) => cmd.aliases && cmd.aliases.includes(commandName),
       );
     if (!command) return;
     command.execute(parsedCommand);

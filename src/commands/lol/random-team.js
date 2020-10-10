@@ -12,11 +12,13 @@ export default {
       const randomChampion =
         availableChampions[(champions.length * Math.random()) << 0]; // eslint-disable-line no-bitwise
       const index = availableChampions.findIndex(
-        x => x.id === randomChampion.id,
+        (x) => x.id === randomChampion.id,
       );
       availableChampions.splice(index, 1);
       return randomChampion;
     });
-    msg.channel.send(`Your teamcomp: ${teamComp.map(c => c.name).join(', ')}`);
+    msg.channel.send(
+      `Your teamcomp: ${teamComp.map((c) => c.name).join(', ')}`,
+    );
   },
 };

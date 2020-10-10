@@ -2,14 +2,16 @@
 
 ## Table of contents
 
-- [Getting OJK Bot up and running](#getting-ojk-bot-up-and-running)
-  - [Requirements](#requirements)
-  - [Create a Discord application](#create-a-discord-application)
-  - [Environment variables](#environment-variables)
-  - [Dependencies](#dependencies)
-  - [Run the bot](#run-the-bot)
-    - [Development](#development)
-    - [Production](#production)
+- [OJK Bot](#ojk-bot)
+  - [Table of contents](#table-of-contents)
+  - [Getting OJK Bot up and running](#getting-ojk-bot-up-and-running)
+    - [Requirements](#requirements)
+    - [Create a Discord application](#create-a-discord-application)
+    - [Environment variables](#environment-variables)
+    - [Dependencies](#dependencies)
+    - [Run the bot](#run-the-bot)
+      - [Development](#development)
+      - [Production](#production)
 
 ## Getting OJK Bot up and running
 
@@ -19,7 +21,7 @@
 
 ### Create a Discord application
 
-Create a Discord application for your server [here](https://discordapp.com/developers/applications/).
+Create a Discord application for your server in the [Discord Developer Portal](https://discord.com/developers/).
 
 Add a bot to your application and copy its token to `.env` described in next step.
 
@@ -30,16 +32,12 @@ Invite the bot to your server in the OAuth2 page using https://discordapp.com/oa
 Your `.env` file should look something like this. Fill in actual values.
 
 ```javascript
-PREFIX="!"
-HS_API_URL=""
-LOGIN_TOKEN=""
-MASHAPE_API_KEY=""
-RIOT_API_URL=""
-RIOT_SUMMONER_API_URL=""
-RIOT_MASTERY_API_URL=""
-RIOT_API_KEY=""
-CHANGELOG_PATH=""
+CHANGELOG_PATH = ''; // Right click CHANGELOG.md -> Copy Path (Needs to be full path, not relative)
+LOGIN_TOKEN = ''; // Discord Developer Portal -> Applications -> <your-bot> -> Client secret
+LOL_DDRAGON_URL = 'https://ddragon.leagueoflegends.com';
 ```
+
+> Note: on Windows backslashes in changelog path need to be escaped.
 
 ### Dependencies
 
@@ -57,4 +55,4 @@ In development you can run the bot with `npm start`.
 
 Build the production version `npm run build`.
 
-Run it with in terminal with `npm run prod` or as a pm2 process `pm2 start "npm run prod" -i 0 --name "ojk-discord-bot"`
+Run it with in terminal with `npm run prod` or as a pm2 process `pm2 start "npm run prod" --name "ojk-discord-bot"`

@@ -5,10 +5,10 @@ import { getApiVersion, getChampions } from '../../utils/lol';
 
 const championReply = async (version, champion) => {
   const imagePalette = await Vibrant.from(
-    `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
+    `${process.env.LOL_DDRAGON_URL}/cdn/${version}/img/champion/${champion.image.full}`,
   )
     .getPalette()
-    .then(palette => palette);
+    .then((palette) => palette);
   const lolWikiId = champion.name.replace(' ', '_');
   const leagueofgraphsId = champion.id.toLowerCase();
   const probuildsId = champion.key;
@@ -18,7 +18,7 @@ const championReply = async (version, champion) => {
     .setTitle(champion.name)
     .setDescription(champion.title)
     .setThumbnail(
-      `${process.env.RIOT_API_URL}/cdn/${version}/img/champion/${champion.image.full}`,
+      `${process.env.LOL_DDRAGON_URL}/cdn/${version}/img/champion/${champion.image.full}`,
     )
     .addField('Wiki', `https://leagueoflegends.fandom.com/wiki/${lolWikiId}`)
     .addField(
@@ -47,7 +47,7 @@ export default {
       const fuse = new Fuse(champions, { keys: ['name'] });
       const searchResults = fuse.search(championName);
       // First index of result array is the most accurate result, so let's return that.
-      const champion = searchResults[0];
+      const { item: champion } = searchResults[0];
       if (champion.name.toUpperCase() !== championName.toUpperCase()) {
         msg.reply(`did you mean "${champion.name}"!`);
       }
