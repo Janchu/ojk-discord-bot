@@ -6,14 +6,10 @@ describe('Commands / Common', () => {
     expect(new Set(commandNames).size === commandNames.length).toBe(true);
   });
   test('No duplicate command name aliases', () => {
-    const commandAliases = Object.values(commands).map(
-      (command) => command.aliases,
-    );
-    console.log(commands);
-    console.log(commandAliases);
+    const commandAliases = Object.values(commands)
+      .map((command) => command.aliases)
+      .flat();
 
-    expect(new Set(commandAliases.flat()).size === commandAliases.length).toBe(
-      true,
-    );
+    expect(new Set(commandAliases).size === commandAliases.length).toBe(true);
   });
 });
