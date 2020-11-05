@@ -15,7 +15,7 @@ jobs:
       - name: Deploy
         run: |
           echo Installing dependencies...
-          npm install
+          npm ci
           echo Setting environment variables...
           echo ${{ secrets.LOGIN_TOKEN }} >> .env
           echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
