@@ -9,7 +9,6 @@ describe('Commands / Common', () => {
     const commandAliases = Object.values(commands)
       .map((command) => command.aliases)
       .flat();
-
     expect(new Set(commandAliases).size === commandAliases.length).toBe(true);
   });
 });
