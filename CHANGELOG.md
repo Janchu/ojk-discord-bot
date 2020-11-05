@@ -1,3 +1,9 @@
+**1.2.2** (2020-11-05)
+
+_Code_:
+
+- Add testing step to github actions and run it on all pushes and pull requests
+
 **1.2.1** (2020-10-09)
 
 _Code_:

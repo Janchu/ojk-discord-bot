@@ -1,0 +1,23 @@
+name: Test
+on: [push, pull_request]
+
+on:
+  push:
+    branches:
+      - master
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - name: Deploy
+        run: |
+          echo Installing dependencies...
+          npm ci
+          echo Building...
+          npm run build
+          echo Running linter...
+          npm run lint
+          echo Running tests...
+          npm test
