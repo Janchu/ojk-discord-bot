@@ -1,0 +1,21 @@
+name: Test
+on: [pull_request]
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+          check-latest: true
+      - name: Test
+        run: |
+          echo Installing dependencies...
+          npm ci
+          echo Building...
+          npm run build
+          echo Running linter...
+          npm run lint
+          echo Running tests...
+          npm test
