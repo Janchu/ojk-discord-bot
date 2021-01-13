@@ -12,16 +12,17 @@ export function parseCommand(msg, modules) {
 
 export function helpTextFormatter(msg, modules) {
   try {
-    const helpTextBlocks = modules.map((module) => {
-      const { commands, name } = module;
-      const helpTextRows = Object.values(commands).map(
-        (command) => `${command.usage} - ${command.description}`,
-      );
-      const helpTextBlock = `> __**${name}**__\n> ${helpTextRows.join('\n> ')}`;
-      return helpTextBlock;
-    });
+    const embeddedMessage = {
+      title: 'OJK Bot commands',
+      fields: modules.map(({ commands, name }) => ({
+        name: `**${name}**`,
+        value: commands.map(
+          (command) => `\`${command.usage}\` - ${command.description}`,
+        ),
+      })),
+    };
 
-    msg.channel.send(helpTextBlocks.join('\n\n'));
+    msg.channel.send({ embed: embeddedMessage });
   } catch (e) {
     msg.channel.send("Help can't be displayed right now.");
   }
