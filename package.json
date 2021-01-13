@@ -29,7 +29,7 @@
   "homepage": "https://github.com/Janchu/ojk-discord-bot#readme",
   "dependencies": {
     "@babel/runtime": "^7.11.2",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "discord.js": "^12.3.1",
     "dotenv": "^8.2.0",
     "fuse.js": "^6.4.1",
