@@ -3,8 +3,8 @@ import { getChampions } from '../../utils/lol';
 export default {
   name: 'random-team',
   aliases: ['team'],
-  usage: '**!lol random-team**',
-  description: 'Returns a team of random champions',
+  usage: '!lol random-team',
+  description: '5 random champions',
   execute: async ({ msg }) => {
     const champions = await getChampions();
     const availableChampions = [...champions];

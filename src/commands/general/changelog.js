@@ -3,8 +3,8 @@ import { readFileSync } from 'fs';
 export default {
   name: 'changelog',
   aliases: ['changes'],
-  usage: '**!changelog**',
-  description: 'Shows changelog',
+  usage: '!changelog',
+  description: 'OJK Bot changelog',
   execute: ({ msg }) => {
     try {
       const changelog = readFileSync(process.env.CHANGELOG_PATH, 'utf8');

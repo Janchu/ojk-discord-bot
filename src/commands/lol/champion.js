@@ -37,8 +37,8 @@ const championReply = async (version, champion) => {
 export default {
   name: 'champion',
   aliases: ['c'],
-  usage: '**!lol champion <champion name>**',
-  description: 'Searches for a champion and displays info about it',
+  usage: '!lol champion <champion name>',
+  description: 'Information of a specific champion',
   execute: async ({ msg, parameters }) => {
     const championName = parameters.join(' ');
     try {
