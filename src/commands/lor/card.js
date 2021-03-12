@@ -1,9 +1,11 @@
 import Fuse from 'fuse.js';
 
+/* eslint-disable import/no-unresolved */
 import set1 from '../../../static/set1-en_us.json';
 import set2 from '../../../static/set2-en_us.json';
 import set3 from '../../../static/set3-en_us.json';
 import set4 from '../../../static/set4-en_us.json';
+/* eslint-enable import/no-unresolved */
 
 const allCards = [...set1, ...set2, ...set3, ...set4];
 
