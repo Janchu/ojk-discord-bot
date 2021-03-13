@@ -7,22 +7,27 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
+      - name: Create beta directory
+        run: mkdir beta && cd beta
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
           check-latest: true
-      - name: Deploy
+      - name: Install dependencies
         run: |
-          mkdir beta
-          cd beta
           echo Installing dependencies...
           npm ci
+      - name: Set environment variables
+          run: |
           echo Setting environment variables...
+          touch .env
           echo ${{ secrets.LOGIN_TOKEN_BETA }} >> .env
           echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
           echo ${{ secrets.CHANGELOG_PATH_BETA }} >> .env
+      - name: Build
           echo Building...
           npm run build
+      - name: Reload pm2 process
           echo Reloading...
           pm2 reload ojk-discord-bot-beta
