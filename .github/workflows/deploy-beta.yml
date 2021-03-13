@@ -19,15 +19,17 @@ jobs:
           echo Installing dependencies...
           npm ci
       - name: Set environment variables
-          run: |
+        run: |
           echo Setting environment variables...
           touch .env
           echo ${{ secrets.LOGIN_TOKEN_BETA }} >> .env
           echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
           echo ${{ secrets.CHANGELOG_PATH_BETA }} >> .env
       - name: Build
+        run: |
           echo Building...
           npm run build
       - name: Reload pm2 process
+        run: |
           echo Reloading...
           pm2 reload ojk-discord-bot-beta
