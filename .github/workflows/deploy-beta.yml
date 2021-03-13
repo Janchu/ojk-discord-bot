@@ -7,9 +7,10 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - name: Create beta directory
-        run: mkdir beta && cd beta
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: beta
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
