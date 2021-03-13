@@ -1,0 +1,28 @@
+name: Deploy
+on:
+  push:
+    branches:
+      - dev
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+          check-latest: true
+      - name: Deploy
+        run: |
+          mkdir beta
+          cd beta
+          echo Installing dependencies...
+          npm ci
+          echo Setting environment variables...
+          echo ${{ secrets.LOGIN_TOKEN_BETA }} >> .env
+          echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
+          echo ${{ secrets.CHANGELOG_PATH_BETA }} >> .env
+          echo Building...
+          npm run build
+          echo Reloading...
+          pm2 reload ojk-discord-bot-beta
