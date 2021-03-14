@@ -25,6 +25,9 @@ bot.on('message', (msg) => {
   if (msg.author.bot) return;
   if (!msg.content.startsWith('!')) return;
 
+  // Ignore commands in general channel when NODE_ENV is not prod
+  if (process.env.NODE_ENV !== 'prod' && msg.channel.name === 'general') return;
+
   // Parse the command and execute it.
   try {
     const parsedCommand = parseCommand(msg, moduleNames);

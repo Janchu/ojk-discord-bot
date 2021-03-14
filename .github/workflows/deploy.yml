@@ -23,6 +23,7 @@ jobs:
           npm ci
           echo Setting environment variables...
           touch .env
+          echo NODE_ENV=prod >> .env
           echo LOGIN_TOKEN=${{ secrets.LOGIN_TOKEN }} >> .env
           echo LOL_DDRAGON_URL=${{ secrets.LOL_DDRAGON_URL }} >> .env
           echo CHANGELOG_PATH=${{ secrets.CHANGELOG_PATH }} >> .env
