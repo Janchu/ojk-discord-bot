@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy (Beta)
 on:
   push:
     branches:
@@ -11,26 +11,22 @@ jobs:
         uses: actions/checkout@v2
         with:
           path: beta
-      - uses: actions/setup-node@v1
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
           node-version: '12'
           check-latest: true
-      - name: Install dependencies
+      - name: Install dependencies, build and reload pm2 process
         run: |
           echo Installing dependencies...
+          cd beta
           npm ci
-      - name: Set environment variables
-        run: |
           echo Setting environment variables...
           touch .env
-          echo ${{ secrets.LOGIN_TOKEN_BETA }} >> .env
-          echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
-          echo ${{ secrets.CHANGELOG_PATH_BETA }} >> .env
-      - name: Build
-        run: |
+          echo LOGIN_TOKEN=${{ secrets.LOGIN_TOKEN_BETA }} >> .env
+          echo LOL_DDRAGON_URL=${{ secrets.LOL_DDRAGON_URL }} >> .env
+          echo CHANGELOG_PATH=${{ secrets.CHANGELOG_PATH_BETA }} >> .env
           echo Building...
           npm run build
-      - name: Reload pm2 process
-        run: |
           echo Reloading...
           pm2 reload ojk-discord-bot-beta

@@ -1,4 +1,4 @@
-name: Deploy
+name: Deploy (Prod)
 on:
   push:
     branches:
@@ -7,19 +7,25 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: prod
+      - name: Setup node
+        uses: actions/setup-node@v1
         with:
           node-version: '12'
           check-latest: true
-      - name: Deploy
+      - name: Install dependencies, build and reload pm2 process
         run: |
           echo Installing dependencies...
+          cd prod
           npm ci
           echo Setting environment variables...
-          echo ${{ secrets.LOGIN_TOKEN }} >> .env
-          echo ${{ secrets.LOL_DDRAGON_URL }} >> .env
-          echo ${{ secrets.CHANGELOG_PATH }} >> .env
+          touch .env
+          echo LOGIN_TOKEN=${{ secrets.LOGIN_TOKEN }} >> .env
+          echo LOL_DDRAGON_URL=${{ secrets.LOL_DDRAGON_URL }} >> .env
+          echo CHANGELOG_PATH=${{ secrets.CHANGELOG_PATH }} >> .env
           echo Building...
           npm run build
           echo Reloading...
