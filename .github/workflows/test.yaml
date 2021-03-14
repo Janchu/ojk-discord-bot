@@ -13,8 +13,8 @@ jobs:
           check-latest: true
       - name: Test
         run: |
-          cd test
           echo Installing dependencies...
+          cd test
           npm ci
           echo Building...
           npm run build
