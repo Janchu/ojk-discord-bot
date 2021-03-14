@@ -1,3 +1,7 @@
+**1.2.4** (2021-03-14)
+
+- Enabled beta environment
+
 **1.2.3** (2021-01-13)
 
 - Improved help command
