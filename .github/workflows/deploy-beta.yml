@@ -1,15 +1,15 @@
-name: Deploy (Prod)
+name: Deploy (Beta)
 on:
   push:
     branches:
-      - master
+      - dev
 jobs:
   deploy:
     runs-on: self-hosted
     steps:
       - uses: actions/checkout@v2
         with:
-          path: 'prod'
+          path: 'beta'
       - uses: actions/setup-node@v1
         with:
           node-version: '12'
@@ -17,15 +17,15 @@ jobs:
       - name: Install dependencies, build and reload pm2 process
         run: |
           echo Installing dependencies...
-          cd prod
+          cd beta
           npm ci
           echo Setting environment variables...
           touch .env
-          echo NODE_ENV=prod >> .env
-          echo LOGIN_TOKEN=${{ secrets.LOGIN_TOKEN }} >> .env
+          echo NODE_ENV=beta >> .env
+          echo LOGIN_TOKEN=${{ secrets.LOGIN_TOKEN_BETA }} >> .env
           echo LOL_DDRAGON_URL=${{ secrets.LOL_DDRAGON_URL }} >> .env
-          echo CHANGELOG_PATH=${{ secrets.CHANGELOG_PATH }} >> .env
+          echo CHANGELOG_PATH=${{ secrets.CHANGELOG_PATH_BETA }} >> .env
           echo Building...
           npm run build
           echo Reloading...
-          pm2 reload ojk-discord-bot
+          pm2 reload ojk-discord-bot-beta
