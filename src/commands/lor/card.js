@@ -11,7 +11,7 @@ const allCards = [...set1, ...set2, ...set3, ...set4];
 
 export default {
   name: 'card',
-  aliases: [],
+  aliases: ['c'],
   usage: '!lor card <card name>',
   description: 'Display card',
   execute: async ({ msg, parameters }) => {
