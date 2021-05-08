@@ -35,18 +35,26 @@ const helpWithExecute = {
     ]),
 };
 
-// Export all commands as an array
-export default [
-  // General
-  changelog,
-  version,
-  helpWithExecute,
-  // LoL
-  apiVersion,
-  champion,
-  championsTotal,
-  randomChampion,
-  randomTeam,
-  // LoR
-  card,
-];
+const general = [changelog, version, helpWithExecute];
+const lol = [apiVersion, champion, championsTotal, randomChampion, randomTeam];
+const lor = [card];
+
+export const availableCommandNamesAndAliases = {
+  general: {
+    commands: [
+      ...general.map(({ name, aliases }) => ({ name, aliases })),
+    ].flat(),
+    defaultCommand: 'help',
+  },
+  lol: {
+    commands: [...lol.map(({ name, aliases }) => ({ name, aliases }))].flat(),
+    defaultCommand: 'champion',
+  },
+  lor: {
+    commands: [...lor.map(({ name, aliases }) => ({ name, aliases }))].flat(),
+    defaultCommand: 'card',
+  },
+};
+
+// Default export all commands
+export default [...general, ...lol, ...lor];
