@@ -10,6 +10,9 @@ import championsTotal from './lol/champions-total';
 import randomChampion from './lol/random-champion';
 import randomTeam from './lol/random-team';
 
+// LoR
+import card from './lor/card';
+
 // Helpers
 import { helpTextFormatter } from '../utils';
 
@@ -28,6 +31,7 @@ const helpWithExecute = {
           randomTeam,
         ],
       },
+      { name: 'LoR', commands: [card] },
     ]),
 };
 
@@ -43,4 +47,6 @@ export default [
   championsTotal,
   randomChampion,
   randomTeam,
+  // LoR
+  card,
 ];

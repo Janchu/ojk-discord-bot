@@ -4,7 +4,7 @@ import commands from './commands';
 
 require('dotenv').config();
 
-const moduleNames = ['general', 'lol'];
+const moduleNames = ['general', 'lol', 'lor'];
 
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
