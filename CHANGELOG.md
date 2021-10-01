@@ -2,15 +2,21 @@
 
 ## [Unreleased]
 
+### Added
+
+- LoR `card` command
+
+### Changed
+
+- Refactored changelog
+- Every module now has a default command
+- Allow same alias to be used in different modules
+
 ## [1.2.4] - 2021-03-14
 
 ### Changed
 
 - Enabled beta environment
-
-### Changed
-
-- Refactored changelog
 
 ## [1.2.3] - 2021-01-13
 

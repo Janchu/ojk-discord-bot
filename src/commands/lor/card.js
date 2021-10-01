@@ -3,7 +3,7 @@ import getCards from '../../utils/lor';
 
 export default {
   name: 'card',
-  aliases: [],
+  aliases: ['c'],
   usage: '!lor card <card name>',
   description: 'Display card',
   execute: async ({ msg, parameters }) => {
