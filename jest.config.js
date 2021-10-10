@@ -1,8 +1,8 @@
 module.exports = {
   collectCoverage: true,
   transform: {
-    '^.+\\.js$': 'babel-jest',
+    "^.+\\.js$": "babel-jest",
   },
-  testEnvironment: 'node',
+  testEnvironment: "node",
   verbose: true,
 };
