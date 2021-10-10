@@ -9,5 +9,8 @@
     "eslint:recommended",
     "plugin:import/recommended",
     "plugin:prettier/recommended"
-  ]
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2020
+  }
 }
