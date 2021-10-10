@@ -1,5 +1,6 @@
 import Fuse from "fuse.js";
 import getCards from "../../utils/lor";
+import logger from "../../utils/logger";
 
 export default {
   name: "card",
@@ -23,6 +24,7 @@ export default {
         msg.channel.send("Card not found.");
       }
     } catch (e) {
+      logger.error(e);
       msg.channel.send(`An error occured.`);
     }
   },

@@ -11,6 +11,7 @@
 - Refactored changelog
 - Every module now has a default command
 - Allow same alias to be used in different modules
+- Improved logging
 
 ## [1.2.4] - 2021-03-14
 
