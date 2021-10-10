@@ -1,4 +1,4 @@
-import Discord from 'discord.js';
+import Discord from "discord.js";
 
 // https://stackoverflow.com/a/60923170
 class TextChannel extends Discord.TextChannel {
@@ -17,14 +17,14 @@ class TextChannel extends Discord.TextChannel {
       channel_id: this.id,
       content,
       author: {
-        id: 'bot id',
-        username: 'bot username',
-        discriminator: '1234',
+        id: "bot id",
+        username: "bot username",
+        discriminator: "1234",
         bot: true,
       },
       pinned: false,
       tts: false,
-      nonce: '',
+      nonce: "",
       embeds: [],
       attachments: [],
       timestamp: Date.now(),

@@ -32,9 +32,9 @@ Invite the bot to your server in the OAuth2 page using https://discordapp.com/oa
 Your `.env` file should look something like this. Fill in actual values.
 
 ```javascript
-CHANGELOG_PATH = ''; // Right click CHANGELOG.md -> Copy Path (Needs to be full path, not relative)
-LOGIN_TOKEN = ''; // Discord Developer Portal -> Applications -> <your-bot> -> Client secret
-LOL_DDRAGON_URL = 'https://ddragon.leagueoflegends.com';
+CHANGELOG_PATH = ""; // Right click CHANGELOG.md -> Copy Path (Needs to be full path, not relative)
+LOGIN_TOKEN = ""; // Discord Developer Portal -> Applications -> <your-bot> -> Client secret
+LOL_DDRAGON_URL = "https://ddragon.leagueoflegends.com";
 ```
 
 > Note: on Windows backslashes in changelog path need to be escaped.

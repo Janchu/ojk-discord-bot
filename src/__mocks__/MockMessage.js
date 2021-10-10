@@ -1,6 +1,6 @@
-import Discord from 'discord.js';
-import MockGuild from './MockGuild';
-import MockTextChannel from './MockTextChannel';
+import Discord from "discord.js";
+import MockGuild from "./MockGuild";
+import MockTextChannel from "./MockTextChannel";
 
 // https://stackoverflow.com/a/60923170
 class Message extends Discord.Message {
@@ -15,7 +15,7 @@ class Message extends Discord.Message {
         author,
         pinned: false,
         tts: false,
-        nonce: '',
+        nonce: "",
         embeds: [],
         attachments: [],
         timestamp: Date.now(),
@@ -24,7 +24,7 @@ class Message extends Discord.Message {
         mention_roles: [],
         mention_everyone: false,
       },
-      channel,
+      channel
     );
   }
 }
@@ -32,8 +32,8 @@ class Message extends Discord.Message {
 export const mockMessage = (txt) => {
   const user = {
     id: Discord.SnowflakeUtil.generate(),
-    username: 'username',
-    discriminator: '1234',
+    username: "username",
+    discriminator: "1234",
   };
   const client = new Discord.Client();
   const guild = new MockGuild(client);
