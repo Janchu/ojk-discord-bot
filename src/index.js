@@ -1,6 +1,6 @@
 import Discord from "discord.js";
 import { parseCommand } from "./utils";
-import commands from "./commands";
+import commands, { availableCommandNamesAndAliases } from "./commands";
 
 require("dotenv").config();
 
@@ -30,13 +30,13 @@ bot.on("message", (msg) => {
 
   // Parse the command and execute it.
   try {
-    const parsedCommand = parseCommand(msg, moduleNames);
+    const parsedCommand = parseCommand(
+      msg,
+      moduleNames,
+      availableCommandNamesAndAliases
+    );
     const { commandName } = parsedCommand;
-    const command =
-      bot.commands.get(commandName) ||
-      bot.commands.find(
-        (cmd) => cmd.aliases && cmd.aliases.includes(commandName)
-      );
+    const command = bot.commands.get(commandName);
     if (!command) return;
     command.execute(parsedCommand);
   } catch (e) {

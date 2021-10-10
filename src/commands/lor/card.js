@@ -1,32 +1,24 @@
 import Fuse from "fuse.js";
-
-/* eslint-disable import/no-unresolved */
-import set1 from "../../../static/set1-en_us.json";
-import set2 from "../../../static/set2-en_us.json";
-import set3 from "../../../static/set3-en_us.json";
-import set4 from "../../../static/set4-en_us.json";
-/* eslint-enable import/no-unresolved */
-
-const allCards = [...set1, ...set2, ...set3, ...set4];
+import getCards from "../../utils/lor";
 
 export default {
   name: "card",
-  aliases: [],
+  aliases: ["c"],
   usage: "!lor card <card name>",
   description: "Display card",
   execute: async ({ msg, parameters }) => {
     const cardName = parameters.join(" ");
+    const cards = await getCards();
     try {
-      const fuse = new Fuse(allCards, { keys: ["name"] });
+      const fuse = new Fuse(cards, { keys: ["name"] });
       const results = fuse.search(cardName);
-      if (results && results.length) {
+      if (results?.length) {
         const { item: card = {} } = results[0];
-        const { assets } = card;
-        const { gameAbsolutePath } = assets && assets.length ? assets[0] : {};
+        const { cardCode } = card;
         if (card.name && card.name.toUpperCase() !== cardName.toUpperCase()) {
           msg.reply(`did you mean "${card.name}"!`);
         }
-        msg.channel.send(`${gameAbsolutePath}`);
+        msg.channel.send(`${process.env.LOR_MOBALYTICS_URL}/cards/${cardCode}`);
       } else {
         msg.channel.send("Card not found.");
       }
