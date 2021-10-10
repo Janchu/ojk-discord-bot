@@ -1,3 +1,5 @@
+import logger from "./logger";
+
 export function parseCommand(msg, modules, availableCommandNamesAndAliases) {
   const prefix = msg.content[0];
   const splitMessage = msg.content.slice(1).split(" ");
@@ -39,6 +41,7 @@ export function helpTextFormatter(msg, modules) {
 
     msg.channel.send({ embed: embeddedMessage });
   } catch (e) {
+    logger.error(e);
     msg.channel.send("Help can't be displayed right now.");
   }
 }

@@ -1,6 +1,7 @@
 import Discord from "discord.js";
 import { parseCommand } from "./utils";
 import commands, { availableCommandNamesAndAliases } from "./commands";
+import logger from "./utils/logger";
 
 require("dotenv").config();
 
@@ -16,7 +17,7 @@ commands.forEach((cmd) => {
 bot.login(process.env.LOGIN_TOKEN);
 
 bot.on("ready", () => {
-  console.log(`Logged in with ${bot.user.tag} as ${bot.user.username}!`); // eslint-disable-line no-console
+  logger.info(`Logged in with ${bot.user.tag} as ${bot.user.username}!`); // eslint-disable-line no-console
 });
 
 /* Listen to messages */
@@ -40,6 +41,7 @@ bot.on("message", (msg) => {
     if (!command) return;
     command.execute(parsedCommand);
   } catch (e) {
+    logger.error(e);
     msg.channel.send(`Invalid command.`);
   }
 });

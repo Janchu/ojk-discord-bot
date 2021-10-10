@@ -1,4 +1,5 @@
 import { readFileSync } from "fs";
+import logger from "../../utils/logger";
 
 export default {
   name: "changelog",
@@ -10,6 +11,7 @@ export default {
       const changelog = readFileSync(process.env.CHANGELOG_PATH, "utf8");
       msg.channel.send(`>>> ${changelog}`);
     } catch (e) {
+      logger.error(e);
       msg.channel.send("Sorry, I couldn't read the changelog right now.");
     }
   },

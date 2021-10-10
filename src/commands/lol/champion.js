@@ -2,6 +2,7 @@ import Discord from "discord.js";
 import Fuse from "fuse.js";
 import * as Vibrant from "node-vibrant";
 import { getApiVersion, getChampions } from "../../utils/lol";
+import logger from "../../utils/logger";
 
 const championReply = async (version, champion) => {
   const imagePalette = await Vibrant.from(
@@ -46,14 +47,19 @@ export default {
       const version = await getApiVersion();
       const fuse = new Fuse(champions, { keys: ["name"] });
       const searchResults = fuse.search(championName);
-      // First index of result array is the most accurate result, so let's return that.
-      const { item: champion } = searchResults[0];
-      if (champion.name.toUpperCase() !== championName.toUpperCase()) {
-        msg.reply(`did you mean "${champion.name}"!`);
+      if (searchResults.length) {
+        // First index of result array is the most accurate result, so let's return that.
+        const { item: champion } = searchResults[0];
+        if (champion.name.toUpperCase() !== championName.toUpperCase()) {
+          msg.reply(`did you mean "${champion.name}"!`);
+        }
+        msg.channel.send(await championReply(version, champion));
+      } else {
+        msg.channel.send(`Champion ${championName} not found.`);
       }
-      msg.channel.send(await championReply(version, champion));
     } catch (e) {
-      msg.channel.send(`Champion ${championName} doesn't exist.`);
+      logger.error(e);
+      msg.channel.send(`An error occured`);
     }
   },
 };
