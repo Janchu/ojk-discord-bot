@@ -5,9 +5,8 @@
     "node": true,
     "jest": true
   },
-  "extends": ["airbnb-base", "prettier"],
-  "plugins": ["prettier"],
-  "parser": "babel-eslint",
+  "extends": ["eslint:recommended", "plugin:import/recommended", "prettier"],
+  "plugins": ["import", "prettier"],
   "rules": {
     "prettier/prettier": ["error"]
   }
