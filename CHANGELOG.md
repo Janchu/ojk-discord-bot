@@ -115,7 +115,9 @@
 - `?lol help` command to display help about LoL commands
 - `?hs card` command to search and dispaly information about cards
 
-[unreleased]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.3...HEAD
+[unreleased]: https://github.com/Janchu/ojk-discord-bot/compare/v1.3.1...HEAD
+[1.2.4]: https://github.com/Janchu/ojk-discord-bot/compare/v1.3.0...v1.3.1
+[1.2.4]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.4...v1.3.0
 [1.2.4]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.3...v1.2.4
 [1.2.3]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.2...v1.2.3
 [1.2.2]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.1...v1.2.2

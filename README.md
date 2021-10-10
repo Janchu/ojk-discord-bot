@@ -35,6 +35,8 @@ Your `.env` file should look something like this. Fill in actual values.
 CHANGELOG_PATH = ""; // Right click CHANGELOG.md -> Copy Path (Needs to be full path, not relative)
 LOGIN_TOKEN = ""; // Discord Developer Portal -> Applications -> <your-bot> -> Client secret
 LOL_DDRAGON_URL = "https://ddragon.leagueoflegends.com";
+LOR_DDRAGON_URL = "https://dd.b.pvp.net";
+LOR_MOBALYTICS_URL = "https://lor.mobalytics.gg";
 ```
 
 > Note: on Windows backslashes in changelog path need to be escaped.

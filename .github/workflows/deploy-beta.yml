@@ -24,6 +24,8 @@ jobs:
           echo NODE_ENV=beta >> .env
           echo LOGIN_TOKEN=${{ secrets.LOGIN_TOKEN_BETA }} >> .env
           echo LOL_DDRAGON_URL=${{ secrets.LOL_DDRAGON_URL }} >> .env
+          echo LOR_DDRAGON_URL=${{ secrets.LOR_DDRAGON_URL }} >> .env
+          echo LOR_MOBALYTICS_URL=${{ secrets.LOR_MOBALYTICS_URL }} >> .env
           echo CHANGELOG_PATH=${{ secrets.CHANGELOG_PATH_BETA }} >> .env
           echo Building...
           npm run build
