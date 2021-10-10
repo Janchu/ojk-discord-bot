@@ -5,7 +5,8 @@ export default async function getCards() {
   const res = await axios.get(
     `${process.env.LOR_DDRAGON_URL}/latest/core/en_us/data/globals-en_us.json`
   );
-  const sets = res.data?.sets;
+  // The "Events" set breaks URL generation so filter it out.
+  const sets = res.data?.sets?.filter((set) => set.name !== "Events");
   const allFullCards = await sets.map(async ({ nameRef: set }) => {
     const setRes = await axios.get(
       `${
