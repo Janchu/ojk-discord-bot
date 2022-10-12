@@ -1,23 +1,23 @@
+import { SlashCommandBuilder } from "discord.js";
 import { getChampions } from "../../utils/lol";
 
 export default {
-  name: "random-team",
-  aliases: ["team"],
-  usage: "!lol random-team",
-  description: "5 random champions",
-  execute: async ({ msg }) => {
+  data: new SlashCommandBuilder()
+    .setName("lol-random-team")
+    .setDescription("5 random champions"),
+  execute: async (interaction) => {
     const champions = await getChampions();
     const availableChampions = [...champions];
     const teamComp = [...Array(5)].map(() => {
       const randomChampion =
-        availableChampions[(champions.length * Math.random()) << 0]; // eslint-disable-line no-bitwise
+        availableChampions[(champions.length * Math.random()) << 0];
       const index = availableChampions.findIndex(
         (x) => x.id === randomChampion.id
       );
       availableChampions.splice(index, 1);
       return randomChampion;
     });
-    msg.channel.send(
+    await interaction.reply(
       `Your teamcomp: ${teamComp.map((c) => c.name).join(", ")}`
     );
   },

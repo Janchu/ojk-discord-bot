@@ -1,10 +1,11 @@
+import { SlashCommandBuilder } from "discord.js";
+
 export default {
-  name: "version",
-  aliases: ["v"],
-  usage: "!version",
-  description: "Current version of OJK Bot",
-  execute: ({ msg }) => {
-    msg.channel.send(
+  data: new SlashCommandBuilder()
+    .setName("version")
+    .setDescription("Current version of OJK Discord Bot"),
+  execute: async (interaction) => {
+    await interaction.reply(
       `I'm the OJK Bot version **${process.env.npm_package_version}**`
     );
   },

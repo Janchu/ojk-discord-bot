@@ -1,13 +1,13 @@
+import { SlashCommandBuilder } from "discord.js";
 import { getChampions } from "../../utils/lol";
 
 export default {
-  name: "champions-total",
-  aliases: ["total"],
-  usage: "!lol champions-total",
-  description: "Total number of champions",
-  execute: async ({ msg }) => {
+  data: new SlashCommandBuilder()
+    .setName("lol-champions-total")
+    .setDescription("Total number of champions"),
+  execute: async (interaction) => {
     const champions = await getChampions();
-    msg.channel.send(
+    await interaction.reply(
       `Current total amount of champions: **${champions.length}**`
     );
   },

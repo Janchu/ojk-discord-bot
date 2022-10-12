@@ -1,47 +1,39 @@
-import Discord from "discord.js";
-import { parseCommand } from "./utils";
-import commands, { availableCommandNamesAndAliases } from "./commands";
+import { Client, Collection, GatewayIntentBits } from "discord.js";
+import commands from "./commands";
 import logger from "./utils/logger";
 
 require("dotenv").config();
 
-const moduleNames = ["general", "lol", "lor"];
+const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-const bot = new Discord.Client();
-bot.commands = new Discord.Collection();
+client.commands = new Collection();
 
-commands.forEach((cmd) => {
-  bot.commands.set(cmd.name, cmd);
+for (const command of commands) {
+  if (command.data) {
+    client.commands.set(command.data.name, command);
+  }
+}
+
+client.login(process.env.LOGIN_TOKEN);
+
+client.on("ready", () => {
+  logger.info(`Logged in with ${client.user.tag} as ${client.user.username}!`);
 });
 
-bot.login(process.env.LOGIN_TOKEN);
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
 
-bot.on("ready", () => {
-  logger.info(`Logged in with ${bot.user.tag} as ${bot.user.username}!`); // eslint-disable-line no-console
-});
+  const command = interaction.client.commands.get(interaction.commandName);
 
-/* Listen to messages */
-bot.on("message", (msg) => {
-  // Ignore bot messages and messages not starting with prefix
-  if (msg.author.bot) return;
-  if (!msg.content.startsWith("!")) return;
+  if (!command) return;
 
-  // Ignore commands in general channel when NODE_ENV is not prod
-  if (process.env.NODE_ENV !== "prod" && msg.channel.name === "general") return;
-
-  // Parse the command and execute it.
   try {
-    const parsedCommand = parseCommand(
-      msg,
-      moduleNames,
-      availableCommandNamesAndAliases
-    );
-    const { commandName } = parsedCommand;
-    const command = bot.commands.get(commandName);
-    if (!command) return;
-    command.execute(parsedCommand);
-  } catch (e) {
-    logger.error(e);
-    msg.channel.send(`Invalid command.`);
+    await command.execute(interaction);
+  } catch (error) {
+    console.error(error);
+    await interaction.reply({
+      content: "There was an error while executing this command!",
+      ephemeral: true,
+    });
   }
 });

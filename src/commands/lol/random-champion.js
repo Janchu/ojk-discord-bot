@@ -1,13 +1,13 @@
+import { SlashCommandBuilder } from "discord.js";
 import { getChampions } from "../../utils/lol";
 
 export default {
-  name: "random-champion",
-  aliases: ["random"],
-  usage: "!lol random",
-  description: "Random champion",
-  execute: async ({ msg }) => {
+  data: new SlashCommandBuilder()
+    .setName("lol-random-champion")
+    .setDescription("Random champion"),
+  execute: async (interaction) => {
     const champions = await getChampions();
-    const randomChampion = champions[(champions.length * Math.random()) << 0]; // eslint-disable-line no-bitwise
-    msg.reply(`you should play ${randomChampion.name}`);
+    const randomChampion = champions[(champions.length * Math.random()) << 0];
+    await interaction.reply(`you should play ${randomChampion.name}`);
   },
 };

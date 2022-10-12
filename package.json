@@ -7,6 +7,7 @@
     "start": "nodemon --exec babel-node src/index.js",
     "build": "babel -d build src --ignore \"src/**/*.spec.js\",\"src/**/*.test.js\",\"src/**/__mocks__\"",
     "prod": "node build/index.js",
+    "deploy-commands": "babel-node src/deploy-commands.js",
     "test": "jest",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
@@ -30,7 +31,7 @@
   "dependencies": {
     "@babel/runtime": "^7.15.4",
     "axios": "^0.22.0",
-    "discord.js": "^12.5.3",
+    "discord.js": "^14.6.0",
     "dotenv": "^10.0.0",
     "fuse.js": "^6.4.6",
     "node-vibrant": "^3.2.1-alpha.1",
