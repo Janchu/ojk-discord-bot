@@ -1,6 +1,5 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
 import commands from "./commands";
-import logger from "./utils/logger";
 
 require("dotenv").config();
 
@@ -17,7 +16,7 @@ for (const command of commands) {
 client.login(process.env.LOGIN_TOKEN);
 
 client.on("ready", () => {
-  logger.info(`Logged in with ${client.user.tag} as ${client.user.username}!`);
+  console.log(`Logged in with ${client.user.tag} as ${client.user.username}!`);
 });
 
 client.on("interactionCreate", async (interaction) => {

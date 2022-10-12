@@ -1,7 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import Fuse from "fuse.js";
 import getCards from "../../utils/lor";
-import logger from "../../utils/logger";
 
 export default {
   data: new SlashCommandBuilder()
@@ -29,7 +28,6 @@ export default {
         interaction.reply("Card not found.");
       }
     } catch (e) {
-      logger.error(e);
       interaction.reply(`An error occured.`);
     }
   },

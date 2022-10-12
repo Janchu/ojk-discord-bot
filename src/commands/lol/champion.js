@@ -2,7 +2,6 @@ import { EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import Fuse from "fuse.js";
 import * as Vibrant from "node-vibrant";
 import { getApiVersion, getChampions } from "../../utils/lol";
-import logger from "../../utils/logger";
 
 const championReply = async (version, champion) => {
   const imagePalette = await Vibrant.from(
@@ -71,7 +70,6 @@ export default {
         await interaction.reply(`Champion ${championName} not found.`);
       }
     } catch (e) {
-      logger.error(e);
       await interaction.reply("An error occured");
     }
   },
