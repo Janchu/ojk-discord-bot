@@ -1,16 +1,25 @@
-import { SlashCommandBuilder } from "discord.js";
+import {
+  CommandInteraction,
+  CommandInteractionOptionResolver,
+  SlashCommandBuilder,
+  InteractionType,
+  ChatInputCommandInteraction,
+} from "discord.js";
 import Fuse from "fuse.js";
 import getCards from "../../utils/lor";
+import { Command } from "../../types";
 
-export default {
+export const Card: Command = {
   data: new SlashCommandBuilder()
     .setName("lor-card")
     .setDescription("Display card")
     .addStringOption((option) =>
       option.setName("input").setDescription("Card name").setRequired(true)
     ),
-  execute: async (interaction) => {
+  execute: async (interaction, wat) => {
+    console.log(wat);
     try {
+      const { options } = interaction;
       const cardName = interaction.options.getString("input");
       const cards = await getCards();
       const fuse = new Fuse(cards, { keys: ["name"] });

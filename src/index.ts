@@ -1,15 +1,16 @@
 import { Client, Collection, GatewayIntentBits } from "discord.js";
-import commands from "./commands";
+import allCommands from "./commands";
+import { Command, DiscordClient } from "./types";
 
 require("dotenv").config();
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-client.commands = new Collection();
+const commands = new Collection<string, Command>();
 
-for (const command of commands) {
+for (const command of allCommands) {
   if (command.data) {
-    client.commands.set(command.data.name, command);
+    commands.set(command.data.name, command);
   }
 }
 
@@ -22,7 +23,7 @@ client.on("ready", () => {
 client.on("interactionCreate", async (interaction) => {
   if (!interaction.isChatInputCommand()) return;
 
-  const command = interaction.client.commands.get(interaction.commandName);
+  const command = commands.get(interaction.commandName);
 
   if (!command) return;
 

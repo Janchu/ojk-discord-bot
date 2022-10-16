@@ -1,7 +1,8 @@
 import { SlashCommandBuilder } from "discord.js";
 import { readFileSync } from "fs";
+import { Command } from "../../types";
 
-export default {
+export const Changelog: Command = {
   data: new SlashCommandBuilder()
     .setName("changelog")
     .setDescription("OJK Discord Bot changelog"),

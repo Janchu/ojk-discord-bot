@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from "discord.js";
+import { Command } from "../../types";
 
-export default {
+export const Version: Command = {
   data: new SlashCommandBuilder()
     .setName("version")
     .setDescription("Current version of OJK Discord Bot"),
