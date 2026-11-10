@@ -1,4 +1,4 @@
-import { ActionRowBuilder, SlashCommandBuilder, StringSelectMenuBuilder } from 'discord.js'
+import { ActionRowBuilder, MessageFlags, SlashCommandBuilder, StringSelectMenuBuilder } from 'discord.js'
 import { loadOptInChannels, saveOptInChannels } from '../../utils/optinStore.js'
 
 const MENU_ID = 'optin-channels'
@@ -62,7 +62,10 @@ export default {
     const options = await buildOptions(interaction)
 
     if (options.length === 0) {
-      await interaction.reply({ content: 'No optional channels are configured yet.', ephemeral: true })
+      await interaction.reply({
+        content: 'No optional channels are configured yet.',
+        flags: MessageFlags.Ephemeral,
+      })
       return
     }
 
@@ -70,7 +73,7 @@ export default {
       content:
         'Select the optional channels you want to see — anything you deselect will be hidden from you.',
       components: [buildMenu(options)],
-      ephemeral: true,
+      flags: MessageFlags.Ephemeral,
     })
   },
 

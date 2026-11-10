@@ -1,4 +1,4 @@
-import { Events } from 'discord.js'
+import { Events, MessageFlags } from 'discord.js'
 import { logger } from '../utils/logger.js'
 
 async function replyError(interaction, err, context) {
@@ -6,7 +6,7 @@ async function replyError(interaction, err, context) {
 
   const reply = {
     content: 'Something went wrong while executing this command.',
-    ephemeral: true,
+    flags: MessageFlags.Ephemeral,
   }
 
   if (interaction.replied || interaction.deferred) {

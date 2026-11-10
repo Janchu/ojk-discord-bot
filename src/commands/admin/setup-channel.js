@@ -1,4 +1,4 @@
-import { ChannelType, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
+import { ChannelType, MessageFlags, PermissionFlagsBits, SlashCommandBuilder } from 'discord.js'
 import { setOptInChannel } from '../../utils/optinStore.js'
 
 export default {
@@ -21,7 +21,7 @@ export default {
     .setDefaultMemberPermissions(PermissionFlagsBits.ManageChannels),
 
   async execute(interaction) {
-    await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral })
 
     const channel = interaction.options.getChannel('channel')
     const guild = interaction.guild
