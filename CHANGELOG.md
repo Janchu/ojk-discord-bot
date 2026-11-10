@@ -1,5 +1,25 @@
 # Changelog
 
+## [2.0.0] - 2026-11-10
+
+### Added
+
+- `/setup-channel` admin command to make a text channel opt-in: hidden from `@everyone`, visible with a dedicated role
+- `/channels` command with a select menu so members can choose which optional channels to see
+- Channel-to-role mapping stored in `data/optin-channels.json`
+- Routing for select menu and button interactions
+- Slash command `/ping`
+
+### Changed
+
+- Rewrote the bot on discord.js v14 with slash commands and auto-loaded command/event modules
+- Improved leveled logging
+- Required environment variables are now validated at startup
+
+### Removed
+
+- Prefix-command modules (LoL and Hearthstone commands)
+
 ## [1.3.0] - 2021-10-10
 
 ### Added
@@ -115,7 +135,8 @@
 - `?lol help` command to display help about LoL commands
 - `?hs card` command to search and dispaly information about cards
 
-[unreleased]: https://github.com/Janchu/ojk-discord-bot/compare/v1.3.1...HEAD
+[2.0.0]: https://github.com/Janchu/ojk-discord-bot/compare/v1.3.0...v2.0.0
+[unreleased]: https://github.com/Janchu/ojk-discord-bot/compare/v2.0.0...HEAD
 [1.2.4]: https://github.com/Janchu/ojk-discord-bot/compare/v1.3.0...v1.3.1
 [1.2.4]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.4...v1.3.0
 [1.2.4]: https://github.com/Janchu/ojk-discord-bot/compare/v1.2.3...v1.2.4
