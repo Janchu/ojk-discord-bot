@@ -23,13 +23,26 @@ export default {
   async execute(interaction) {
     await interaction.deferReply({ flags: MessageFlags.Ephemeral })
 
-    const channel = interaction.options.getChannel('channel')
     const guild = interaction.guild
+    const channel = await guild.channels.fetch(interaction.options.getChannel('channel').id)
     const me = await guild.members.fetchMe()
     const reason = `Optional channel setup by ${interaction.user.tag}`
 
     if (!me.permissions.has(PermissionFlagsBits.ManageRoles)) {
       await interaction.editReply('I need the **Manage Roles** permission to set up optional channels.')
+      return
+    }
+
+    if (!channel.permissionsFor(me).has(PermissionFlagsBits.ManageChannels)) {
+      await interaction.editReply('I need the **Manage Channels** permission on this channel to change its visibility.')
+      return
+    }
+
+    if (channel.permissionsLocked) {
+      await interaction.editReply(
+        `**#${channel.name}** is synced to its category, so its permissions can't be edited directly. ` +
+          'Go to the channel → Edit Channel → Permissions, click **Unsync**, then run `/setup-channel` again.'
+      )
       return
     }
 
@@ -58,14 +71,15 @@ export default {
     }
 
     try {
-      await channel.permissionOverwrites.edit(guild.roles.everyone, { ViewChannel: false }, { reason })
+      // Allows first, @everyone deny last: denying View Channel removes the bot's
+      // own access (it comes via @everyone) unless it has an explicit allow,
+      // which would make the remaining edits fail with Missing Access.
       await channel.permissionOverwrites.edit(role, { ViewChannel: true }, { reason })
+      await channel.permissionOverwrites.edit(me, { ViewChannel: true }, { reason })
+      await channel.permissionOverwrites.edit(guild.roles.everyone, { ViewChannel: false }, { reason })
     } catch (err) {
       if (createdRole) await role.delete('Cleanup after failed setup').catch(() => {})
-      await interaction.editReply(
-        `Could not update the channel permissions: ${err.message}\n` +
-          'If the channel is synced to a category, unsync it first, or apply the overwrite on the category instead.'
-      )
+      await interaction.editReply(`Could not update the channel permissions: ${err.message}`)
       return
     }
 
@@ -74,7 +88,7 @@ export default {
     await interaction.editReply(
       `Optional channel set up: **#${channel.name}**\n` +
         '- Hidden from @everyone (View Channel denied)\n' +
-        `- Visible with the role **${role.name}**\n` +
+        `- Visible with the role **${role.name}** (and with me, so I don't lock myself out)\n` +
         'Members can now opt in or out themselves with `/channels`.'
     )
   },
