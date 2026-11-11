@@ -1,0 +1,12 @@
+services:
+  ojk-discord-bot:
+    build: .
+    image: ojk-discord-bot:latest
+    container_name: ojk-discord-bot
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      # Bot persists opt-in channel data to /app/data (src/utils/optinStore.js).
+      # On Unraid, point this at the appdata share instead:
+      #   /mnt/user/appdata/ojk-discord-bot/data:/app/data
+      - ./data:/app/data
